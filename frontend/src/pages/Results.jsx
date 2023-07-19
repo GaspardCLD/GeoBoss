@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import GameContext from "../../context/GameContext";
 
 function Results() {
+  const { currentScore } = useContext(GameContext);
   return (
     <div>
-      <p>Ici la page de résultats</p>
+      <p>Tu as eu le score de {currentScore}</p>
     </div>
   );
 }

@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
     const storedPseudo = Cookies.get("pseudo");
     if (storedPseudo) {
       setUserPseudo(storedPseudo);
+      setIsLoggedIn(true);
     }
   }, []);
 

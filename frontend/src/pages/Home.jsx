@@ -1,13 +1,26 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import StatesContext from "../../context/StatesContext";
+import AuthContext from "../../context/AuthContext";
 
 function Home() {
+  const navigateTo = useNavigate();
   const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <h1>Trouve les distances entre les villes et deviens le GEOBOSS</h1>
-      <button type="button" onClick={() => setOpenLoginModal(true)}>
+      <button
+        type="button"
+        onClick={() => {
+          if (!isLoggedIn) {
+            setOpenLoginModal(true);
+          } else {
+            navigateTo("/game");
+          }
+        }}
+      >
         Commencer
       </button>
       <Login

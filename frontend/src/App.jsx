@@ -10,6 +10,7 @@ import Results from "./pages/Results";
 import WallOfFame from "./pages/WallOfFame";
 import Unauthorized from "./pages/Unauthorized";
 import NavBar from "./components/NavBar";
+import Rules from "./pages/Rules";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -34,10 +35,8 @@ function App() {
           path="/results"
           element={isLoggedIn ? <Results /> : <Unauthorized />}
         />
-        <Route
-          path="/walloffame"
-          element={isLoggedIn ? <WallOfFame /> : <Unauthorized />}
-        />
+        <Route path="/walloffame" element={<WallOfFame />} />
+        <Route path="/rules" element={<Rules />} />
       </Routes>
     </Router>
   );

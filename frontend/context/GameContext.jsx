@@ -13,6 +13,9 @@ export function GameProvider({ children }) {
   ]);
   const [currentStep, setCurrentStep] = useState(1);
   const [userResponse, setUserResponse] = useState("");
+  const [expectedDistance, setExpectedDistance] = useState(0);
+  const [gameModalOpen, setGameModalOpen] = useState(false);
+  const [gameStep, setGameStep] = useState(1);
 
   const GameValue = useMemo(() => ({
     currentScore,
@@ -23,6 +26,12 @@ export function GameProvider({ children }) {
     setCurrentStep,
     userResponse,
     setUserResponse,
+    expectedDistance,
+    setExpectedDistance,
+    gameModalOpen,
+    setGameModalOpen,
+    gameStep,
+    setGameStep,
   }));
 
   return (
