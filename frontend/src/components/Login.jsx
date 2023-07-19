@@ -1,11 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import ReactModal from "react-modal";
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 function Login({ openLoginModal, setOpenLoginModal }) {
+  const { setUserPseudo, setIsLoggedIn } = useContext(AuthContext);
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState({ pseudo: "", password: "", password2: "" });
   //   const [alreadyUsedPseudo, setAlreadyUsedPseudo] = useState(false);
@@ -17,11 +21,23 @@ function Login({ openLoginModal, setOpenLoginModal }) {
   const handleLoginButtonClick = () => {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/login`, user)
-      .then(() => {
-        navigateTo("/game/1");
+      .then((response) => {
+        const { token } = response.data;
+        Cookies.set("jwt", token, { secure: true, sameSite: "strict" });
+        const jwtToken = Cookies.get("jwt");
+
+        if (jwtToken) {
+          const decodedToken = jwtDecode(jwtToken);
+          const { pseudo } = decodedToken;
+          Cookies.set("pseudo", pseudo);
+          setUserPseudo(pseudo);
+          setIsLoggedIn(true);
+          navigateTo("/game");
+        }
       })
-      .catch(() => {
+      .catch((error) => {
         setWrongAssociation(true);
+        console.error(error);
       });
   };
 
