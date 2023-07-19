@@ -5,12 +5,18 @@ class CityManager extends AbstractManager {
     super({ table: "city" });
   }
 
-  createCity(body) {
-    const { name, lat, lon, population } = body;
+  createCity(city) {
+    const { name, lon, lat, population } = city;
     return this.database.query(
-      `insert into ${this.table} (name, lon, lat, population) values (?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (name, lon, lat, population)
+       VALUES (?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE name=name`,
       [name, lon, lat, population]
     );
+  }
+
+  deleteAll() {
+    return this.database.query(`DELETE FROM ${this.table}`);
   }
 }
 

@@ -2,12 +2,14 @@
 const axios = require("axios");
 require("dotenv").config();
 
+const { API_URL } = process.env;
+
 const fetchApi = (req, res, next) => {
   const minPopulation = parseInt(req.params.value, 10) || 0;
   axios
-    .get("https://geo.api.gouv.fr/communes?fields=nom,population,centre")
+    .get(`${API_URL}`)
     .then((response) => {
-      let cities = [];
+      let cities;
       if (minPopulation > 0) {
         cities = response.data.filter(
           (item) => item.population > minPopulation
@@ -15,7 +17,7 @@ const fetchApi = (req, res, next) => {
       } else {
         cities = response.data;
       }
-      res.send(cities);
+      req.body.fetch = cities;
       next();
     })
 
@@ -27,9 +29,9 @@ const fetchApi = (req, res, next) => {
 
 const fetchApiNoParams = (req, res, next) => {
   axios
-    .get("https://geo.api.gouv.fr/communes?fields=nom,population,centre")
+    .get(`${API_URL}`)
     .then((response) => {
-      res.send(response.data);
+      req.body.data = response.data;
       next();
     })
     .catch((err) => {

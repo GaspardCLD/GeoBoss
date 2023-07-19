@@ -13,10 +13,28 @@ const browse = (req, res) => {
 };
 
 const add = (req, res) => {
-  models.city
-    .createCity(req.body)
-    .then(([result]) => {
-      res.status(201).send(result);
+  const { fetch } = req.body;
+
+  models.city.deleteAll();
+
+  const citiesData = fetch.map((city) => {
+    return {
+      name: city.nom,
+      lon: city.centre.coordinates[0].toString(),
+      lat: city.centre.coordinates[1].toString(),
+      population: city.population,
+    };
+  });
+
+  const promises = [];
+
+  citiesData.forEach((city) => {
+    promises.push(models.city.createCity(city));
+  });
+
+  Promise.all(promises)
+    .then((results) => {
+      res.status(201).send(results);
     })
     .catch((err) => {
       console.error(err);
