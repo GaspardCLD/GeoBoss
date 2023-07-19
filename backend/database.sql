@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS city (
 INSERT INTO
   user (pseudo, hashedPassword)
 VALUES
-  ('user1', 'Password1'),
-  ('user2', 'Password2'),
-  ('user3', 'Password3');
+  (
+    'gaspi',
+    '$argon2id$v=19$m=65536,t=5,p=1$GixxtmbFYS7IMpnqWrsjzA$VJHjeGPBL4V/lkEe+24mo53QkOedQxn3qpcvy9esP/8'
+  );
