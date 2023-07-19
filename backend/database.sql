@@ -13,27 +13,28 @@ USE geoboss;
 -- Table "user"
 CREATE TABLE IF NOT EXISTS user (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  pseudo VARCHAR(50),
-  hashedPassword VARCHAR(255)
+  pseudo VARCHAR(50) NOT NULL,
+  hashedPassword VARCHAR(255) NOT NULL
 );
 
 -- Table "score"
 CREATE TABLE IF NOT EXISTS score (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  score INT,
+  user_id INT NOT NULL,
+  score INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 -- Table "city"
 CREATE TABLE IF NOT EXISTS city (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255),
-  lat VARCHAR(50),
-  lon VARCHAR(50),
-  population INT
+  name VARCHAR(255) NOT NULL,
+  lat VARCHAR(50) NOT NULL,
+  lon VARCHAR(50) NOT NULL,
+  population INT NOT NULL
 );
 
+-- Insertion d'exemple dans la table "user"
 INSERT INTO
   user (pseudo, hashedPassword)
 VALUES

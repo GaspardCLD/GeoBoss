@@ -19,7 +19,7 @@ const verifyPseudo = (req, res, next) => {
       if (rows.length === 0) {
         next();
       } else {
-        res.status(409).send("PSeudo already in use");
+        res.status(409).send("Pseudo already in use");
       }
     })
     .catch((err) => {

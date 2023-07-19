@@ -7,16 +7,24 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import ConfirmationModal from "./ConfirmationModal";
 
 function Login({ openLoginModal, setOpenLoginModal }) {
   const { setUserPseudo, setIsLoggedIn } = useContext(AuthContext);
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState({ pseudo: "", password: "", password2: "" });
-  //   const [alreadyUsedPseudo, setAlreadyUsedPseudo] = useState(false);
+  const [alreadyUsedPseudo, setAlreadyUsedPseudo] = useState(false);
   const [wrongAssociation, setWrongAssociation] = useState(false);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
-  const alibi = "";
   const navigateTo = useNavigate();
+
+  const resetParameters = () => {
+    setUser({ pseudo: "", password: "", password2: "" });
+    setAlreadyUsedPseudo(false);
+    setWrongAssociation(false);
+    setCurrentStep(1);
+  };
 
   const handleLoginButtonClick = () => {
     axios
@@ -34,10 +42,27 @@ function Login({ openLoginModal, setOpenLoginModal }) {
           setIsLoggedIn(true);
           navigateTo("/game");
         }
+        setConfirmationModalOpen(true);
+        resetParameters();
       })
       .catch((error) => {
         setWrongAssociation(true);
         console.error(error);
+      });
+  };
+
+  const handleSignUpButtonClick = () => {
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/signup`, user)
+      .then(() => {
+        setConfirmationModalOpen(true);
+        navigateTo("/");
+        resetParameters();
+      })
+      .catch((error) => {
+        if (error.response.status === 409) {
+          setAlreadyUsedPseudo(true);
+        }
       });
   };
 
@@ -95,9 +120,18 @@ function Login({ openLoginModal, setOpenLoginModal }) {
               Jouer !
             </button>
             {wrongAssociation ? (
-              <p className="text-red-500 text-sm italic">
-                Pseudo ou mot de passe incorrect
-              </p>
+              <div className="flex flex-col">
+                <p className="text-red-500 text-sm italic">
+                  Pseudo ou mot de passe incorrect.
+                </p>
+                <button
+                  type="button"
+                  className="text-sm underline"
+                  onClick={() => setCurrentStep(2)}
+                >
+                  S'inscrire ?
+                </button>
+              </div>
             ) : null}
           </div>
         );
@@ -166,18 +200,25 @@ function Login({ openLoginModal, setOpenLoginModal }) {
                   name="userPassword"
                   placeholder="Saisis un mot de passe (8 caractè̀res min.)"
                   onChange={(event) => handleInputChange(event)}
-                  value={user.password}
+                  value={user.password2}
                 />
               </label>
             </form>
             <button
               ref={loginButtonRef}
-              onClick={alibi}
               type="button"
+              onClick={() => {
+                handleSignUpButtonClick();
+                setOpenLoginModal(false);
+                setConfirmationModalOpen(true);
+              }}
               className="w-[47%] h-[44px] flex justify-center items-center  shadow-xs rounded-lg px-[8px]   bg-[#257492] text-[#E3E4E2] font-semibold text-base  hover:font-bold"
             >
               Je m'inscris
             </button>
+            {alreadyUsedPseudo ? (
+              <p className="text-red-500 text-sm italic">Pseudo déjà utilisé</p>
+            ) : null}
           </div>
         );
       default:
@@ -186,40 +227,50 @@ function Login({ openLoginModal, setOpenLoginModal }) {
   }
 
   return (
-    <ReactModal
-      isOpen={openLoginModal}
-      onRequestClose={() => {
-        setOpenLoginModal(false);
-        setCurrentStep(1);
-        setUser({ pseudo: "", password: "", password2: "" });
-      }}
-      ariaHideApp={false}
-      style={{
-        overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: 1000,
-          backdropFilter: "blur(6px)",
-        },
-        content: {
-          backgroundColor: "#fff",
-          color: "#000",
-          overflow: "hidden",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "32px",
-          height: "fit-content",
-          width: "fit-content",
-          maxWidth: "90vw",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          borderRadius: "15px",
-        },
-      }}
-    >
-      {renderContent()}
-    </ReactModal>
+    <>
+      <ReactModal
+        isOpen={openLoginModal}
+        onRequestClose={() => {
+          setOpenLoginModal(false);
+          setCurrentStep(1);
+          setUser({ pseudo: "", password: "", password2: "" });
+          setWrongAssociation(false);
+          setAlreadyUsedPseudo(false);
+        }}
+        ariaHideApp={false}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 1000,
+            backdropFilter: "blur(6px)",
+          },
+          content: {
+            backgroundColor: "#fff",
+            color: "#000",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "32px",
+            height: "fit-content",
+            width: "fit-content",
+            maxWidth: "90vw",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: "15px",
+          },
+        }}
+      >
+        {renderContent()}
+      </ReactModal>
+      {confirmationModalOpen ? (
+        <ConfirmationModal
+          confirmationModalOpen={confirmationModalOpen}
+          setConfirmationModalOpen={setConfirmationModalOpen}
+        />
+      ) : null}
+    </>
   );
 }
 
