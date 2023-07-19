@@ -29,6 +29,13 @@ class CityManager extends AbstractManager {
   resetAllUsage() {
     return this.database.query(`UPDATE ${this.table} SET is_used = 0`);
   }
+
+  // this function gets two random cities among the database and returns them, it also changes their is_used to 1
+  randomCities() {
+    return this.database.query(
+      `SELECT * FROM ${this.table} WHERE is_used = 0 ORDER BY RAND() LIMIT 2`
+    );
+  }
 }
 
 module.exports = CityManager;

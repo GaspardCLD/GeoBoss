@@ -28,5 +28,6 @@ router.get("/cities", cityControllers.browse);
 
 router.put("/city/:id/isused", cityControllers.setIsUsed);
 router.put("/cities/resetusage", cityControllers.resetUsage);
+router.get("/cities/random", cityControllers.randomCities);
 
 module.exports = router;

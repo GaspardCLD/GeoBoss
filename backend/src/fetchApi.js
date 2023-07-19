@@ -31,7 +31,7 @@ const fetchApiNoParams = (req, res, next) => {
   axios
     .get(`${API_URL}`)
     .then((response) => {
-      const cities = response.data.filter((item) => item.population > 150000);
+      const cities = response.data.filter((item) => item.population > 120000);
       req.body.fetch = cities;
       next();
     })

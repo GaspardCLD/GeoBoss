@@ -67,9 +67,33 @@ const resetUsage = (req, res) => {
     });
 };
 
+const randomCities = (req, res) => {
+  models.city
+    .randomCities()
+    .then(([rows]) => {
+      models.city
+        .updateUsage(rows[0].id)
+        .then(() => {
+          return models.city.updateUsage(rows[1].id); // Use return here to chain promises
+        })
+        .then(() => {
+          res.status(200).send(rows); // Send the response after both promises are resolved
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
   setIsUsed,
   resetUsage,
+  randomCities,
 };
