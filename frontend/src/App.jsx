@@ -1,12 +1,19 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-
-import "./App.css";
+import Game from "./pages/Game";
+import Results from "./pages/Results";
+import WallOfFame from "./pages/WallOfFame";
 
 function App() {
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/user/:id/game/:step" element={<Game />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/walloffame" element={<WallOfFame />} />
+      </Routes>
+    </Router>
   );
 }
 
