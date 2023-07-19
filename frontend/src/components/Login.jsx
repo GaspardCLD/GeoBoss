@@ -1,16 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useRef, useEffect, useContext } from "react";
 import ReactModal from "react-modal";
-import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import StatesContext from "../../context/StatesContext";
 import ConfirmationModal from "./ConfirmationModal";
 
-function Login({ openLoginModal, setOpenLoginModal }) {
+function Login() {
   const { setUserPseudo, setIsLoggedIn } = useContext(AuthContext);
+  const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState({ pseudo: "", password: "", password2: "" });
   const [alreadyUsedPseudo, setAlreadyUsedPseudo] = useState(false);
@@ -289,10 +290,5 @@ function Login({ openLoginModal, setOpenLoginModal }) {
     </>
   );
 }
-
-Login.propTypes = {
-  openLoginModal: PropTypes.bool.isRequired,
-  setOpenLoginModal: PropTypes.func.isRequired,
-};
 
 export default Login;

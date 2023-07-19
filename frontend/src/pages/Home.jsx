@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Login from "../components/Login";
+import StatesContext from "../../context/StatesContext";
 
 function Home() {
-  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
   return (
     <>
       <h1>Trouve les distances entre les villes et deviens le GEOBOSS</h1>

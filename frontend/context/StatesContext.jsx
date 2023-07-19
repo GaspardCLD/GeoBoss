@@ -7,10 +7,13 @@ export default StatesContext;
 
 export function StatesProvider({ children }) {
   const [citiesLoaded, setCitiesLoaded] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   const statesValue = useMemo(() => ({
     citiesLoaded,
     setCitiesLoaded,
+    openLoginModal,
+    setOpenLoginModal,
   }));
 
   return (

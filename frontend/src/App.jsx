@@ -8,6 +8,7 @@ import Game from "./pages/Game";
 import Results from "./pages/Results";
 import WallOfFame from "./pages/WallOfFame";
 import Unauthorized from "./pages/Unauthorized";
+import NavBar from "./components/NavBar";
 
 function App() {
   const { isLoggedIn, setCitiesLoaded } = useContext(AuthContext);
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <Router>
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
