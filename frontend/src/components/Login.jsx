@@ -24,6 +24,7 @@ function Login({ openLoginModal, setOpenLoginModal }) {
     setAlreadyUsedPseudo(false);
     setWrongAssociation(false);
     setCurrentStep(1);
+    setOpenLoginModal(false);
   };
 
   const handleLoginButtonClick = () => {
@@ -52,18 +53,20 @@ function Login({ openLoginModal, setOpenLoginModal }) {
   };
 
   const handleSignUpButtonClick = () => {
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/signup`, user)
-      .then(() => {
-        setConfirmationModalOpen(true);
-        navigateTo("/");
-        resetParameters();
-      })
-      .catch((error) => {
-        if (error.response.status === 409) {
-          setAlreadyUsedPseudo(true);
-        }
-      });
+    if (user.password.length >= 8 && user.password === user.password2) {
+      axios
+        .post(`${import.meta.env.VITE_BACKEND_URL}/signup`, user)
+        .then(() => {
+          setConfirmationModalOpen(true);
+          navigateTo("/");
+          resetParameters();
+        })
+        .catch((error) => {
+          if (error.response.status === 409) {
+            setAlreadyUsedPseudo(true);
+          }
+        });
+    }
   };
 
   const handleInputChange = (event) => {
@@ -92,7 +95,7 @@ function Login({ openLoginModal, setOpenLoginModal }) {
       case 0:
         return (
           <div className="loginModal flex flex-col items-center gap-5">
-            <p className="text-4xl font-semibold">Connecte-toi !</p>
+            <p className="text-4xl text-center font-semibold">Connecte-toi</p>
             <form className="flex flex-col gap-3 w-[70vw] sm:w-[350px]">
               <h3>Pseudo</h3>
               <input
@@ -127,7 +130,10 @@ function Login({ openLoginModal, setOpenLoginModal }) {
                 <button
                   type="button"
                   className="text-sm underline"
-                  onClick={() => setCurrentStep(2)}
+                  onClick={() => {
+                    setCurrentStep(2);
+                    setUser({ pseudo: "", password: "", password2: "" });
+                  }}
                 >
                   S'inscrire ?
                 </button>
@@ -162,7 +168,7 @@ function Login({ openLoginModal, setOpenLoginModal }) {
         return (
           <div className="flex flex-col items-center justify-between gap-5">
             <p className="text-3xl font-semibold text-[#257492]">INSCRIPTION</p>
-            <form className="flex flex-col gap-3 w-[70vw] sm:w-[350px]">
+            <form className="flex flex-col gap-2 w-[70vw] sm:w-[350px]">
               <h3>Pseudo*</h3>
               <label htmlFor="pseudo">
                 <input
@@ -176,8 +182,11 @@ function Login({ openLoginModal, setOpenLoginModal }) {
                   value={user.pseudo}
                 />
               </label>
+              <h3>Mot de passe (8 caractères min.)*</h3>
+              {user.password.length < 8 && user.password ? (
+                <p className="text-red-500 text-xs italic">min. 8 caractères</p>
+              ) : null}
 
-              <h3>Mot de passe*</h3>
               <label htmlFor="userpassword">
                 <input
                   className="border border-gray-300 rounded-[4px] p-1 w-[100%] outline-none"
@@ -185,12 +194,19 @@ function Login({ openLoginModal, setOpenLoginModal }) {
                   id="password"
                   maxLength={255}
                   name="userPassword"
-                  placeholder="Saisis un mot de passe (8 caractè̀res min.)"
+                  placeholder="Saisis un mot de passe"
                   onChange={(event) => handleInputChange(event)}
                   value={user.password}
                 />
               </label>
-              <h3>Confirmer le mot de passe*</h3>
+              <div className="flex flex-col ">
+                <h3>Confirmer le mot de passe*</h3>
+                {user.password !== user.password2 ? (
+                  <p className="text-red-500 text-xs italic">
+                    Les mots de passe ne sont pas identiques
+                  </p>
+                ) : null}
+              </div>
               <label htmlFor="userpassword">
                 <input
                   className="border border-gray-300 rounded-[4px] p-1 w-[100%] outline-none"
@@ -198,7 +214,7 @@ function Login({ openLoginModal, setOpenLoginModal }) {
                   id="password2"
                   maxLength={255}
                   name="userPassword"
-                  placeholder="Saisis un mot de passe (8 caractè̀res min.)"
+                  placeholder="Confirme ton mot de passe"
                   onChange={(event) => handleInputChange(event)}
                   value={user.password2}
                 />
@@ -209,15 +225,15 @@ function Login({ openLoginModal, setOpenLoginModal }) {
               type="button"
               onClick={() => {
                 handleSignUpButtonClick();
-                setOpenLoginModal(false);
-                setConfirmationModalOpen(true);
               }}
-              className="w-[47%] h-[44px] flex justify-center items-center  shadow-xs rounded-lg px-[8px]   bg-[#257492] text-[#E3E4E2] font-semibold text-base  hover:font-bold"
+              className="w-[55%] h-[44px] flex justify-center items-center  shadow-xs rounded-lg px-[8px]   bg-[#257492] text-[#E3E4E2] font-semibold text-base  hover:font-bold"
             >
               Je m'inscris
             </button>
             {alreadyUsedPseudo ? (
-              <p className="text-red-500 text-sm italic">Pseudo déjà utilisé</p>
+              <p className="text-red-500 text-sm italic">
+                Ce pseudo est déjà pris !
+              </p>
             ) : null}
           </div>
         );

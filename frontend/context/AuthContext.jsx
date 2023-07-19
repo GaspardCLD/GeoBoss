@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { createContext, useState, useMemo, useEffect } from "react";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";

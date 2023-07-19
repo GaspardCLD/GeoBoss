@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
@@ -9,7 +10,14 @@ import WallOfFame from "./pages/WallOfFame";
 import Unauthorized from "./pages/Unauthorized";
 
 function App() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setCitiesLoaded } = useContext(AuthContext);
+
+  useEffect(() => {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/cities`).then(() => {
+      setCitiesLoaded(true);
+    });
+  }, [setCitiesLoaded]);
+
   return (
     <Router>
       <Routes>
