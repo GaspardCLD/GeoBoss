@@ -33,3 +33,10 @@ CREATE TABLE IF NOT EXISTS city (
   lon VARCHAR(50),
   population INT
 );
+
+INSERT INTO
+  user (pseudo, hashedPassword)
+VALUES
+  ('user1', 'Password1'),
+  ('user2', 'Password2'),
+  ('user3', 'Password3');
