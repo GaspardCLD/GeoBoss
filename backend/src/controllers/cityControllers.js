@@ -71,18 +71,12 @@ const randomCities = (req, res) => {
   models.city
     .randomCities()
     .then(([rows]) => {
-      models.city
-        .updateUsage(rows[0].id)
-        .then(() => {
-          return models.city.updateUsage(rows[1].id); // Use return here to chain promises
-        })
-        .then(() => {
-          res.status(200).send(rows); // Send the response after both promises are resolved
-        })
-        .catch((err) => {
-          console.error(err);
-          res.sendStatus(500);
-        });
+      // Process the rows array here
+      res.status(200).send(rows);
+
+      // Update the usage for each city
+      const promises = rows.map((row) => models.city.updateUsage(row.id));
+      return Promise.all(promises); // Wait for all updateUsage promises to resolve
     })
     .catch((err) => {
       console.error(err);

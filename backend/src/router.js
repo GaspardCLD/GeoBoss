@@ -7,6 +7,7 @@ const { verifyPseudo, verifyPassword, hashPassword } = require("./auth");
 const itemControllers = require("./controllers/itemControllers");
 const userControllers = require("./controllers/userControllers");
 const cityControllers = require("./controllers/cityControllers");
+const scoreControllers = require("./controllers/scoreControllers");
 const { fetchApi, fetchApiNoParams } = require("./fetchApi");
 
 router.get("/items", itemControllers.browse);
@@ -29,5 +30,7 @@ router.get("/cities", cityControllers.browse);
 router.put("/city/:id/isused", cityControllers.setIsUsed);
 router.put("/cities/resetusage", cityControllers.resetUsage);
 router.get("/cities/random", cityControllers.randomCities);
+
+router.post("/score/:userID/:score", scoreControllers.add);
 
 module.exports = router;

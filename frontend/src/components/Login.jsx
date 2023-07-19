@@ -77,12 +77,17 @@ function Login() {
 
   function renderContent() {
     const loginButtonRef = useRef(null);
+    const signUpButtonRef = useRef(null);
 
     useEffect(() => {
       function handleEnterKey(event) {
         if (event.key === "Enter") {
           event.preventDefault();
-          loginButtonRef.current.click();
+          if (currentStep === 0) {
+            loginButtonRef.current.click();
+          } else if (currentStep === 2) {
+            signUpButtonRef.current.click();
+          }
         }
       }
 
@@ -90,7 +95,7 @@ function Login() {
       return () => {
         document.removeEventListener("keydown", handleEnterKey);
       };
-    }, []);
+    }, [currentStep]);
 
     switch (currentStep) {
       case 0:

@@ -44,6 +44,11 @@ const CityManager = require("./CityManager");
 models.city = new CityManager();
 models.city.setDatabase(pool);
 
+const ScoreManager = require("./ScoreManager");
+
+models.score = new ScoreManager();
+models.score.setDatabase(pool);
+
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model
 

@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
+import StatesContext from "../context/StatesContext";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
 import Results from "./pages/Results";
@@ -11,13 +12,14 @@ import Unauthorized from "./pages/Unauthorized";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const { isLoggedIn, setCitiesLoaded } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const { setCitiesLoaded } = useContext(StatesContext);
 
   useEffect(() => {
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/cities`).then(() => {
       setCitiesLoaded(true);
     });
-  }, [setCitiesLoaded]);
+  }, []);
 
   return (
     <Router>
