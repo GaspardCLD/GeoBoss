@@ -1,7 +1,11 @@
 import React from "react";
 
 function Results() {
-  return <div />;
+  return (
+    <div>
+      <p>Ici la page de résultats</p>
+    </div>
+  );
 }
 
 export default Results;
