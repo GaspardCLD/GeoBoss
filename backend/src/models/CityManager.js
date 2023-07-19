@@ -8,8 +8,8 @@ class CityManager extends AbstractManager {
   createCity(body) {
     const { name, lat, lon, population } = body;
     return this.database.query(
-      `insert into ${this.table} (name, lat, lon, population) values (?, ?, ?, ?)`,
-      [name, lat, lon, population]
+      `insert into ${this.table} (name, lon, lat, population) values (?, ?, ?, ?)`,
+      [name, lon, lat, population]
     );
   }
 }
