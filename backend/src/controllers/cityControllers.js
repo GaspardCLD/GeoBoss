@@ -42,7 +42,34 @@ const add = (req, res) => {
     });
 };
 
+const setIsUsed = (req, res) => {
+  const { id } = req.params;
+  models.city
+    .updateUsage(id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const resetUsage = (req, res) => {
+  models.city
+    .resetAllUsage()
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   add,
   browse,
+  setIsUsed,
+  resetUsage,
 };

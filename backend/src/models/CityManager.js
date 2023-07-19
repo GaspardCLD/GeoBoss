@@ -18,6 +18,17 @@ class CityManager extends AbstractManager {
   deleteAll() {
     return this.database.query(`DELETE FROM ${this.table}`);
   }
+
+  updateUsage(id) {
+    return this.database.query(
+      `UPDATE ${this.table} SET is_used = 1 WHERE id = ?`,
+      [id]
+    );
+  }
+
+  resetAllUsage() {
+    return this.database.query(`UPDATE ${this.table} SET is_used = 0`);
+  }
 }
 
 module.exports = CityManager;

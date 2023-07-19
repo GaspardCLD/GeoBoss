@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS city (
   name VARCHAR(255) NOT NULL,
   lon VARCHAR(50) NOT NULL,
   lat VARCHAR(50) NOT NULL,
-  population INT NOT NULL
+  population INT NOT NULL,
+  is_used BOOLEAN NOT NULL default false
 );
 
 -- Insertion d'exemple dans la table "user"

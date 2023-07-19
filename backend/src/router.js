@@ -26,4 +26,7 @@ router.get("/cities", cityControllers.browse);
 
 // protected routes
 
+router.put("/city/:id/isused", cityControllers.setIsUsed);
+router.put("/cities/resetusage", cityControllers.resetUsage);
+
 module.exports = router;
