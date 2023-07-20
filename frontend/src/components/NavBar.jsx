@@ -48,18 +48,7 @@ function NavBar() {
           >
             ACCUEIL
           </Link>
-          {!isLoggedIn && (
-            <button
-              type="button"
-              className="flex w-[100%] justify-between whitespace-nowrap items-center py-[4px]"
-              onClick={() => {
-                setBurgerMenuOpen(false);
-                setOpenLoginModal(true);
-              }}
-            >
-              INSCRIPTION / CONNEXION
-            </button>
-          )}
+
           <Link
             to="/rules"
             className="flex w-[100%] justify-between whitespace-nowrap items-center py-[4px]"
@@ -84,6 +73,18 @@ function NavBar() {
             >
               DECONNEXION
             </Link>
+          )}
+          {!isLoggedIn && (
+            <button
+              type="button"
+              className="flex w-[100%] justify-between whitespace-nowrap items-center py-[4px]"
+              onClick={() => {
+                setBurgerMenuOpen(false);
+                setOpenLoginModal(true);
+              }}
+            >
+              INSCRIPTION / CONNEXION
+            </button>
           )}
         </div>
         <div className="navbar-links flex items-center gap-1.7 sm:gap-[10px] ">

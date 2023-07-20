@@ -9,8 +9,7 @@ class CityManager extends AbstractManager {
     const { name, lon, lat, population } = city;
     return this.database.query(
       `INSERT INTO ${this.table} (name, lon, lat, population)
-       VALUES (?, ?, ?, ?)
-       ON DUPLICATE KEY UPDATE name=name`,
+       VALUES (?, ?, ?, ?)`,
       [name, lon, lat, population]
     );
   }

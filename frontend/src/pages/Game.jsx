@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -7,7 +7,6 @@ import StatesContext from "../../context/StatesContext";
 import GameModal from "./GameModal";
 
 function Game() {
-  const [toggleFetch, setToggleFetch] = useState(false);
   const [randomReady, setRandomReady] = useState(false);
   const [userBestScoreLoaded, setUserBestScoreLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,7 +60,6 @@ function Game() {
         .put(`${import.meta.env.VITE_BACKEND_URL}/cities/resetusage`)
         .then(() => {
           setCurrentScore(0);
-          setToggleFetch((prevToggleFetch) => !prevToggleFetch);
           setGameStep(1);
         })
         .catch((error) => {
@@ -87,7 +85,7 @@ function Game() {
           setIsLoading(false);
         });
     }
-  }, [citiesLoaded, toggleFetch]);
+  }, [citiesLoaded, gameStep]);
 
   const handleUserResponse = (event) => {
     setUserResponse(event.target.value);
@@ -128,9 +126,7 @@ function Game() {
     const difference = Math.abs(currentDistance - userResponse);
     setExpectedDistance(currentDistance);
 
-    if (difference > currentDistance) {
-      setToggleFetch(!toggleFetch);
-    } else {
+    if (difference <= currentDistance) {
       setCurrentScore(
         currentScore + Math.round((1 - difference / currentDistance) * 200)
       );
@@ -139,7 +135,6 @@ function Game() {
 
     if (gameStep <= 4) {
       setGameStep(gameStep + 1);
-      setToggleFetch(!toggleFetch);
     } else {
       setGameStep(gameStep + 1);
       const userId = parseInt(Cookies.get("id"), 10);
@@ -166,7 +161,6 @@ function Game() {
   };
 
   return isLoading ? (
-    // Render a loading state here (e.g., a spinner)
     <div>Loading...</div>
   ) : (
     citiesLoaded && userBestScoreLoaded && randomReady && (
@@ -177,10 +171,10 @@ function Game() {
           </h1>
           <div className="flex justify-between items-center w-[90vw] text-3xl">
             <h3 className="shadow-xs rounded-[8px] px-[8px] border border-solid border-gray-400  w-[40vw] flex justify-center text-center py-auto">
-              {cities[0]?.name || "Ville 1  "}
+              {cities[0].name}
             </h3>
             <h3 className="shadow-xs rounded-[8px] px-[8px] border border-solid border-gray-400  w-[40vw] flex justify-center text-center ">
-              {cities[1]?.name || "Ville 2"}
+              {cities[1].name}
             </h3>
           </div>
           <div className="flex items-center gap-2 mt-[5vh]">

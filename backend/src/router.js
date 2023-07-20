@@ -25,7 +25,7 @@ router.post("/signup", verifyPseudo, hashPassword, userControllers.add);
 router.post("/login", userControllers.login, verifyPassword);
 
 router.post("/cities/:minPopulation", fetchApi, cityControllers.add);
-router.post("/cities", fetchApiNoParams, cityControllers.add);
+router.get("/cities/fetch", fetchApiNoParams, cityControllers.add);
 router.get("/cities", cityControllers.browse);
 
 router.put("/city/:id/isused", cityControllers.setIsUsed);

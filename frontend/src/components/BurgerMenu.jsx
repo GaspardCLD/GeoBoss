@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -43,19 +42,7 @@ function BurgerMenu({ burgerMenuOpen, setBurgerMenuOpen }) {
           ACCUEIL
           <img src={arrow} alt="flèche" />
         </Link>
-        {!isLoggedIn && (
-          <button
-            type="button"
-            className="flex w-[100%] justify-between items-center pt-[4px]"
-            onClick={() => {
-              setBurgerMenuOpen(false);
-              setOpenLoginModal(true);
-            }}
-          >
-            INSCRIPTION / CONNEXION
-            <img src={arrow} alt="flèche" />
-          </button>
-        )}
+
         <Link
           to="/rules"
           className="flex w-[100%] justify-between items-center py-[4px]"
@@ -72,6 +59,19 @@ function BurgerMenu({ burgerMenuOpen, setBurgerMenuOpen }) {
           WALL OF FAME
           <img src={arrow} alt="flèche" />
         </Link>
+        {!isLoggedIn && (
+          <button
+            type="button"
+            className="flex w-[100%] justify-between items-center pt-[4px]"
+            onClick={() => {
+              setBurgerMenuOpen(false);
+              setOpenLoginModal(true);
+            }}
+          >
+            INSCRIPTION / CONNEXION
+            <img src={arrow} alt="flèche" />
+          </button>
+        )}
         {isLoggedIn && (
           <Link
             to="/"

@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/cities`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/cities/fetch`)
       .then(() => {
         setCitiesLoaded(true);
       })

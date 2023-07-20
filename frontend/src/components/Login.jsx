@@ -12,7 +12,8 @@ import ConfirmationModal from "./ConfirmationModal";
 
 function Login() {
   const { setUserPseudo, setIsLoggedIn, setUserID } = useContext(AuthContext);
-  const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
+  const { openLoginModal, setOpenLoginModal, citiesLoaded } =
+    useContext(StatesContext);
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState({ pseudo: "", password: "", password2: "" });
   const [alreadyUsedPseudo, setAlreadyUsedPseudo] = useState(false);
@@ -37,11 +38,11 @@ function Login() {
       .post(`${import.meta.env.VITE_BACKEND_URL}/login`, user)
       .then((response) => {
         setConfirmationModalOpen(true);
+        resetParameters();
+
         const { token } = response.data;
         Cookies.set("jwt", token, { secure: true, sameSite: "strict" });
         const jwtToken = Cookies.get("jwt");
-
-        resetParameters();
         if (jwtToken) {
           const decodedToken = jwtDecode(jwtToken);
           const { pseudo, sub } = decodedToken;
@@ -50,7 +51,11 @@ function Login() {
           setUserPseudo(pseudo);
           setUserID(sub);
           setIsLoggedIn(true);
-          navigateTo("/game");
+          if (citiesLoaded) {
+            navigateTo("/game");
+          } else {
+            navigateTo("/rules");
+          }
         }
       })
       .catch((error) => {
@@ -128,7 +133,7 @@ function Login() {
             </form>
             <button
               ref={loginButtonRef}
-              onClick={handleLoginButtonClick}
+              onClick={() => handleLoginButtonClick()}
               type="button"
               className="w-[47%] h-[44px] flex justify-center items-center  shadow-xs rounded-lg px-[8px]   bg-[#257492] text-[#E3E4E2] font-semibold text-base  hover:font-bold"
             >

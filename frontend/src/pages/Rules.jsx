@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import GameContext from "../../context/GameContext";
+import StatesContext from "../../context/StatesContext";
 
 function Rules() {
-  const { isLoggedIn, setOpenLoginModal } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const { setGameStep } = useContext(GameContext);
+  const { setOpenLoginModal } = useContext(StatesContext);
   const navigateTo = useNavigate();
   return (
     <div className="flex flex-col items-center mx-[6vw] my-[5vw]">
@@ -14,15 +16,17 @@ function Rules() {
         Bienvenue dans le jeu GeoBoss ! <br />
       </p>
       <br />
-      <p>
-        L'objectif du jeu est de deviner le plus précisément possible la
-        distance en kilomètres entre deux villes françaises.
-      </p>
+
       <ol className="text-left mt-4">
+        <p>
+          L'objectif du jeu est de deviner le plus précisément possible la
+          distance en kilomètres entre deux villes françaises pour te rapprocher
+          des 1000 points.
+        </p>
+        <br />
         <li>Le jeu te présente plusieurs fois deux villes aléatoires.</li>
         <li>
-          Tu dois deviner la distance entre ces deux villes en kilomètres dans
-          la zone de saisie.
+          Tu dois deviner la distance entre ces deux villes en kilomètres.
         </li>
         <li>
           Après avoir soumis ton estimation, le jeu t'indiquera la distance
@@ -36,7 +40,7 @@ function Rules() {
 
         <li>Après 5 étapes, ton score final et ton classement sont révélés.</li>
       </ol>
-      <p className="mt-4 font-bold">Prêt à commencer ? </p>
+      <p className="mt-4 font-bold">Prêt à te lancer ? </p>
       <br />
 
       <button
