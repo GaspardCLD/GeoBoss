@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useContext } from "react";
 import { Turn as Hamburger } from "hamburger-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import BurgerMenu from "./BurgerMenu";
 import logo from "../assets/geoguess_logo.png";
@@ -10,13 +10,16 @@ import StatesContext from "../../context/StatesContext";
 
 function NavBar() {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, setUserPseudo } = useContext(AuthContext);
   const { setOpenLoginModal } = useContext(StatesContext);
+
+  const navigateTo = useNavigate();
 
   const handleLogOut = () => {
     Cookies.remove("pseudo");
     setIsLoggedIn(false);
     setBurgerMenuOpen(false);
+    setUserPseudo("");
   };
   return (
     <div className="w-[100%] z-10  top-0 left-0 ">
@@ -29,7 +32,13 @@ function NavBar() {
               alt="logo"
             />
           </Link>{" "}
-          <h1 className="text-3xl font-bold text-white">GeoBoss</h1>
+          <button
+            type="button"
+            onClick={() => navigateTo("/")}
+            className="text-3xl font-bold text-white"
+          >
+            GeoBoss
+          </button>
         </div>
         <div className="desktopLinks hidden text-center lg:flex navbar-links items-center gap-[120px] text-white ">
           <Link

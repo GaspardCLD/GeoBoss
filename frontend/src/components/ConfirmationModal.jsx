@@ -46,7 +46,7 @@ function ConfirmationModal({
       }}
     >
       <p className="text-2xl text-[#257492] font-bold">
-        Tu es inscrit <br /> C'est parti pour l'aventure
+        C'est parti pour l'aventure
       </p>
     </ReactModal>
   );

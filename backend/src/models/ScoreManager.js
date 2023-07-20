@@ -30,6 +30,15 @@ class ScoreManager extends AbstractManager {
     );
   }
 
+  getScoresOrdered() {
+    return this.database.query(
+      `SELECT scores.*, users.pseudo AS user_name
+       FROM score AS scores
+       INNER JOIN user AS users ON scores.user_id = users.id
+       ORDER BY score DESC`
+    );
+  }
+
   getUserBestScore(userID) {
     return this.database.query(
       `SELECT * FROM ${this.table} WHERE user_id = ? ORDER BY score DESC LIMIT 1`,

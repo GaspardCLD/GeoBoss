@@ -36,6 +36,7 @@ router.post("/score/:userID/:score", scoreControllers.add);
 router.get("/scores", scoreControllers.getScores);
 router.get("/scores/all", scoreControllers.browseScores);
 router.get("/score/:score/rank", scoreControllers.getScoreRank);
+router.get("/scores/ordered", scoreControllers.getScoresOrdered);
 
 // protected routes
 

@@ -10,7 +10,7 @@ import arrow from "../assets/arrow.png";
 import Login from "./Login";
 
 function BurgerMenu({ burgerMenuOpen, setBurgerMenuOpen }) {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, setUserPseudo } = useContext(AuthContext);
   const { setOpenLoginModal } = useContext(StatesContext);
   const customModalStyles = {
     overlay: {
@@ -22,6 +22,7 @@ function BurgerMenu({ burgerMenuOpen, setBurgerMenuOpen }) {
   const handleLogOut = () => {
     Cookies.remove("pseudo");
     setIsLoggedIn(false);
+    setUserPseudo("");
     setBurgerMenuOpen(false);
   };
 

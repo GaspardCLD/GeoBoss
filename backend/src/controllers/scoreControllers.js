@@ -25,6 +25,18 @@ const browseScores = (req, res) => {
     });
 };
 
+const getScoresOrdered = (req, res) => {
+  models.score
+    .getScoresOrdered()
+    .then(([result]) => {
+      res.status(200).send(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const getScores = (req, res) => {
   const { limit } = req.query;
   models.score
@@ -71,4 +83,5 @@ module.exports = {
   getUserBestScore,
   browseScores,
   getScoreRank,
+  getScoresOrdered,
 };

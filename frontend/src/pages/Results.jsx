@@ -41,7 +41,7 @@ function Results() {
         <p className="text-3xl">Bravo, tu te classes</p>
         <p className="text-6xl text-[#257492] font-bold">
           {" "}
-          {userRank} / {numberOfScores}
+          {userRank + 1} / {numberOfScores}
         </p>
         <div className="flex flex-col items-center gap-4 mt-[6vh] ">
           <Link
