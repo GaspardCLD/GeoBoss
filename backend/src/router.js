@@ -2,7 +2,12 @@ const express = require("express");
 
 const router = express.Router();
 
-const { verifyPseudo, verifyPassword, hashPassword } = require("./auth");
+const {
+  verifyPseudo,
+  verifyPassword,
+  hashPassword,
+  verifyToken,
+} = require("./auth");
 
 const itemControllers = require("./controllers/itemControllers");
 const userControllers = require("./controllers/userControllers");
@@ -19,13 +24,9 @@ router.delete("/items/:id", itemControllers.destroy);
 router.post("/signup", verifyPseudo, hashPassword, userControllers.add);
 router.post("/login", userControllers.login, verifyPassword);
 
-router.get("/users", userControllers.browse);
-
 router.post("/cities/:minPopulation", fetchApi, cityControllers.add);
 router.post("/cities", fetchApiNoParams, cityControllers.add);
 router.get("/cities", cityControllers.browse);
-
-// protected routes
 
 router.put("/city/:id/isused", cityControllers.setIsUsed);
 router.put("/cities/resetusage", cityControllers.resetUsage);
@@ -33,8 +34,14 @@ router.get("/cities/random", cityControllers.randomCities);
 
 router.post("/score/:userID/:score", scoreControllers.add);
 router.get("/scores", scoreControllers.getScores);
-router.get("/score/user/:userID", scoreControllers.getUserBestScore);
 router.get("/scores/all", scoreControllers.browseScores);
 router.get("/score/:score/rank", scoreControllers.getScoreRank);
+
+// protected routes
+
+router.use(verifyToken);
+
+router.get("/users", userControllers.browse);
+router.get("/score/user/:userID", scoreControllers.getUserBestScore);
 
 module.exports = router;

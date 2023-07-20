@@ -5,7 +5,7 @@ require("dotenv").config();
 const { API_URL } = process.env;
 
 const fetchApi = (req, res, next) => {
-  const minPopulation = parseInt(req.params.minPopulation, 10) || 0;
+  const minPopulation = parseInt(req.params.minPopulation, 10) || 100000;
   axios
     .get(`${API_URL}`)
     .then((response) => {
@@ -31,7 +31,7 @@ const fetchApiNoParams = (req, res, next) => {
   axios
     .get(`${API_URL}`)
     .then((response) => {
-      const cities = response.data.filter((item) => item.population > 120000);
+      const cities = response.data.filter((item) => item.population > 100000);
       req.body.fetch = cities;
       next();
     })

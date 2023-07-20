@@ -6,6 +6,7 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import GameContext from "../../context/GameContext";
 import StatesContext from "../../context/StatesContext";
 import ConfirmationModal from "./ConfirmationModal";
 
@@ -18,6 +19,8 @@ function Login() {
   const [wrongAssociation, setWrongAssociation] = useState(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
+  const { setGameStep } = useContext(GameContext);
+
   const navigateTo = useNavigate();
 
   const resetParameters = () => {
@@ -25,6 +28,7 @@ function Login() {
     setAlreadyUsedPseudo(false);
     setWrongAssociation(false);
     setCurrentStep(1);
+    setGameStep(0);
     setOpenLoginModal(false);
   };
 
@@ -36,6 +40,8 @@ function Login() {
         Cookies.set("jwt", token, { secure: true, sameSite: "strict" });
         const jwtToken = Cookies.get("jwt");
 
+        setConfirmationModalOpen(true);
+        resetParameters();
         if (jwtToken) {
           const decodedToken = jwtDecode(jwtToken);
           const { pseudo, sub } = decodedToken;
@@ -46,8 +52,6 @@ function Login() {
           setIsLoggedIn(true);
           navigateTo("/game");
         }
-        setConfirmationModalOpen(true);
-        resetParameters();
       })
       .catch((error) => {
         setWrongAssociation(true);

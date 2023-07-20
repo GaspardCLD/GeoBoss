@@ -71,12 +71,10 @@ const randomCities = (req, res) => {
   models.city
     .randomCities()
     .then(([rows]) => {
-      // Process the rows array here
       res.status(200).send(rows);
 
-      // Update the usage for each city
       const promises = rows.map((row) => models.city.updateUsage(row.id));
-      return Promise.all(promises); // Wait for all updateUsage promises to resolve
+      return Promise.all(promises);
     })
     .catch((err) => {
       console.error(err);

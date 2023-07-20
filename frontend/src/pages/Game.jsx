@@ -33,12 +33,15 @@ function Game() {
     const userId = parseInt(Cookies.get("id"), 10);
 
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/score/user/${userId}`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/score/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("jwt")}`,
+        },
+      })
       .then((response) => {
-        // eslint-disable-next-line no-unused-expressions
-        response.data.length !== 0
-          ? setUserBestScore(response.data[0].score)
-          : setUserBestScore(0);
+        setUserBestScore(
+          response.data.length !== 0 ? response.data[0].score : 0
+        );
       })
       .then(() => {
         setUserBestScoreLoaded(true);
@@ -54,7 +57,7 @@ function Game() {
         .put(`${import.meta.env.VITE_BACKEND_URL}/cities/resetusage`)
         .then(() => {
           setCurrentScore(0);
-          setToggleFetch(!toggleFetch);
+          setToggleFetch((prevToggleFetch) => !prevToggleFetch);
           setGameStep(1);
         })
         .catch((error) => {
@@ -148,32 +151,50 @@ function Game() {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleValidateClick();
+    }
+  };
+
   return (
     citiesLoaded &&
     userBestScoreLoaded &&
     randomReady && (
       <>
-        <div className="flex flex-col  items-center">
-          <h1>Quelle est la distance entre </h1>
-          <div className="flex justify-between w-[80vw] ">
-            <h3 className="border border-solid w-[35vw] flex justify-center ">
-              {cities[0].name}
+        <div className="flex flex-col gap-7 items-center my-[10vh] h-[100%]">
+          <h1 className="text-center text-4xl mx-[10vw]">
+            Quelle est la distance entre{" "}
+          </h1>
+          <div className="flex justify-between items-center w-[90vw] text-3xl">
+            <h3 className="shadow-xs rounded-[8px] px-[8px] border border-solid border-gray-400  w-[40vw] flex justify-center text-center py-auto">
+              {cities[0]?.name || "Ville 1  "}
             </h3>
-            <h3 className="border border-solid w-[35vw] flex justify-center">
-              {cities[1].name}
+            <h3 className="shadow-xs rounded-[8px] px-[8px] border border-solid border-gray-400  w-[40vw] flex justify-center text-center ">
+              {cities[1]?.name || "Ville 2"}
             </h3>
           </div>
-          <div className="flex">
+          <div className="flex items-center gap-2 mt-[5vh]">
             <input
+              className="w-[50vw] sm:w-[350px] h-[44px] flex justify-center items-center shadow-xs rounded-[5px] px-[8px] border border-solid border-gray-300 text-center text-2xl"
               id="userResponse"
-              type="number"
+              type="text"
+              inputMode="numeric"
+              pattern="^[0-9]*$"
               placeholder="Entrer une valeur"
               onChange={(event) => handleUserResponse(event)}
               value={userResponse}
+              onKeyPress={handleKeyPress}
             />
-            <h3>Km</h3>
+            <h3 className="text-xl font-bold">Km</h3>
           </div>
           <button
+            className={`w-[30vw] sm:w-[350px] h-[44px] flex justify-center items-center shadow-xs rounded-[25px] px-[8px] border border-solid border-[#257492] bg-[${
+              gameStep <= 4 ? "#FFFFFF" : "#257492"
+            }] text-[${
+              gameStep <= 4 ? "#257492" : "#E3E4E2"
+            }] font-semibold text-base hover:font-bold`}
             type="button"
             onClick={() => {
               handleValidateClick();
@@ -181,9 +202,18 @@ function Game() {
           >
             {gameStep <= 4 ? "Suivant" : "Terminer"}
           </button>
-          <p>Score : {currentScore}</p>
-          <p>Etape : {gameStep}/5</p>
-          <p>Ton meilleur score : {userBestScore}</p>
+          <div className="flex justify-between items-center w-full px-[5vw]">
+            <div>
+              <p>
+                Score : <span className="font-bold"> {currentScore}</span>
+              </p>
+              <p>
+                Ton meilleur score :{" "}
+                <span className="font-bold">{userBestScore}</span>
+              </p>
+            </div>
+            <p className="text-xl font-bold">{gameStep}/5</p>
+          </div>
         </div>
         <GameModal />
       </>
