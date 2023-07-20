@@ -31,7 +31,7 @@ function Results() {
 
   return (
     <>
-      <div className="flex flex-col items-center h-[100%] justify-between gap-6 my-[10vw]">
+      <div className="flex flex-col items-center h-[100%] justify-between gap-6 my-[10vh]">
         <p className="text-3xl">Ton score est de </p>
         <p className="text-8xl text-[#257492] font-bold">
           {" "}

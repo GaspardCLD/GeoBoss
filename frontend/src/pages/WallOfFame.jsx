@@ -24,8 +24,8 @@ function WallOfFame() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center my-[10vh] gap-6">
-      <p className="text-center font-bold text-4xl">WALL OF FAME</p>
+    <div className="flex flex-col items-center my-[8vh] gap-6">
+      <p className="text-center font-bold text-4xl mb-[32px]">WALL OF FAME</p>
       <ol>
         {allScores.map((score, index) => (
           <li
@@ -50,7 +50,7 @@ function WallOfFame() {
         ))}
       </ol>
       <button
-        className="w-[50vw] sm:w-[350px] sm h-[44px] flex justify-center items-center mt-[32px] shadow-xs rounded-[20px] px-[8px] mb-[8vw]   bg-[#257492] text-[#E3E4E2] font-semibold text-base hover:font-bold"
+        className="w-[50vw] sm:w-[350px] sm h-[44px] flex justify-center items-center mt-[32px] shadow-xs rounded-[20px] px-[8px] mb-[32px]   bg-[#257492] text-[#E3E4E2] font-semibold text-base hover:font-bold"
         type="button"
         onClick={() => {
           if (!isLoggedIn) {

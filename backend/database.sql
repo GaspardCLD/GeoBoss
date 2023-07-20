@@ -40,13 +40,27 @@ INSERT INTO
   user (pseudo, hashedPassword)
 VALUES
   (
-    'gaspi',
+    'Gaspi',
     '$argon2id$v=19$m=65536,t=5,p=1$GixxtmbFYS7IMpnqWrsjzA$VJHjeGPBL4V/lkEe+24mo53QkOedQxn3qpcvy9esP/8'
+  ),
+  (
+    'Barbie',
+    '$argon2id$v=19$m=65536,t=5,p=1$GixjtmbFYS7IMpnqWrsjzA$VJHjeGPBL4V/lkEe+24mo53QkOedQxn3qpcvy9esP/8'
+  ),
+  (
+    'Oppenheimer',
+    '$argon2id$v=19$m=65536,t=5,p=1$GixxtmbFYS7IMpnqsrsjzA$VJHjeGPBL4V/lkEe+24mo53QkOedQxn3qpcvy9esP/8'
   );
 
 INSERT INTO
   score (user_id, score)
 VALUES
-  (1, 851),
+  (1, 821),
   (1, 223),
-  (1, 792);
+  (1, 792),
+  (2, 867),
+  (2, 300),
+  (2, 932),
+  (3, 511),
+  (3, 117),
+  (3, 392);
