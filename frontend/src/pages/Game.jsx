@@ -10,6 +10,7 @@ function Game() {
   const [toggleFetch, setToggleFetch] = useState(false);
   const [randomReady, setRandomReady] = useState(false);
   const [userBestScoreLoaded, setUserBestScoreLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigateTo = useNavigate();
 
@@ -48,6 +49,9 @@ function Game() {
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -78,6 +82,9 @@ function Game() {
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [citiesLoaded, toggleFetch]);
@@ -158,10 +165,11 @@ function Game() {
     }
   };
 
-  return (
-    citiesLoaded &&
-    userBestScoreLoaded &&
-    randomReady && (
+  return isLoading ? (
+    // Render a loading state here (e.g., a spinner)
+    <div>Loading...</div>
+  ) : (
+    citiesLoaded && userBestScoreLoaded && randomReady && (
       <>
         <div className="flex flex-col gap-7 items-center my-[10vh] h-[100%]">
           <h1 className="text-center text-4xl mx-[10vw]">
