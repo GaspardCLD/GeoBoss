@@ -5,7 +5,7 @@ require("dotenv").config();
 const { API_URL } = process.env;
 
 const fetchApi = (req, res, next) => {
-  const minPopulation = parseInt(req.params.value, 10) || 0;
+  const minPopulation = parseInt(req.params.minPopulation, 10) || 0;
   axios
     .get(`${API_URL}`)
     .then((response) => {

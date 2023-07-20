@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import StatesContext from "../../context/StatesContext";
 import AuthContext from "../../context/AuthContext";
+import GameContext from "../../context/GameContext";
 
 function Home() {
   const navigateTo = useNavigate();
+  const { setGameStep } = useContext(GameContext);
   const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
   const { isLoggedIn } = useContext(AuthContext);
   return (
@@ -17,6 +19,7 @@ function Home() {
           if (!isLoggedIn) {
             setOpenLoginModal(true);
           } else {
+            setGameStep(0);
             navigateTo("/game");
           }
         }}

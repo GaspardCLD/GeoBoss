@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 import GameContext from "../../context/GameContext";
 import StatesContext from "../../context/StatesContext";
 import GameModal from "./GameModal";
@@ -8,6 +9,7 @@ import GameModal from "./GameModal";
 function Game() {
   const [toggleFetch, setToggleFetch] = useState(false);
   const [randomReady, setRandomReady] = useState(false);
+  const [userBestScoreLoaded, setUserBestScoreLoaded] = useState(false);
 
   const navigateTo = useNavigate();
 
@@ -22,8 +24,41 @@ function Game() {
     setExpectedDistance,
     gameStep,
     setGameStep,
+    userBestScore,
+    setUserBestScore,
   } = useContext(GameContext);
   const { citiesLoaded } = useContext(StatesContext);
+
+  useEffect(() => {
+    const userId = parseInt(Cookies.get("id"), 10);
+
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/score/user/${userId}`)
+      .then((response) => {
+        setUserBestScore(response.data[0].score);
+      })
+      .then(() => {
+        setUserBestScoreLoaded(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (gameStep === 0) {
+      axios
+        .put(`${import.meta.env.VITE_BACKEND_URL}/cities/resetusage`)
+        .then(() => {
+          setCurrentScore(0);
+          setToggleFetch(!toggleFetch);
+          setGameStep(1);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [gameStep]);
 
   useEffect(() => {
     if (citiesLoaded) {
@@ -74,33 +109,45 @@ function Game() {
   }
 
   const handleValidateClick = () => {
-    if (gameStep <= 4) {
-      const city1 = cities[0];
-      const city2 = cities[1];
-      const currentDistance = Math.round(calculateDistance(city1, city2));
-      const difference = Math.abs(currentDistance - userResponse);
-      setExpectedDistance(currentDistance);
+    const city1 = cities[0];
+    const city2 = cities[1];
+    const currentDistance = Math.round(calculateDistance(city1, city2));
+    const difference = Math.abs(currentDistance - userResponse);
+    setExpectedDistance(currentDistance);
 
-      if (difference > currentDistance) {
-        setUserResponse("");
-        setToggleFetch(!toggleFetch);
-      } else {
-        setCurrentScore(
-          currentScore + Math.round((1 - difference / currentDistance) * 200)
-        );
-        setUserResponse("");
-        setGameModalOpen(true);
-        setGameStep(gameStep + 1);
-        setToggleFetch(!toggleFetch);
-      }
+    if (difference > currentDistance) {
+      setToggleFetch(!toggleFetch);
     } else {
-      setGameModalOpen(true);
-      navigateTo("/results");
+      setCurrentScore(
+        currentScore + Math.round((1 - difference / currentDistance) * 200)
+      );
+    }
+    setGameModalOpen(true);
+
+    if (gameStep <= 4) {
+      setGameStep(gameStep + 1);
+      setToggleFetch(!toggleFetch);
+    } else {
+      setGameStep(gameStep + 1);
+      const userId = parseInt(Cookies.get("id"), 10);
+      axios
+        .post(
+          `${import.meta.env.VITE_BACKEND_URL}/score/${userId}/${
+            currentScore + Math.round((1 - difference / currentDistance) * 200)
+          }`
+        )
+        .then(() => {
+          navigateTo("/results");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 
   return (
     citiesLoaded &&
+    userBestScoreLoaded &&
     randomReady && (
       <>
         <div className="flex flex-col  items-center">
@@ -133,6 +180,7 @@ function Game() {
           </button>
           <p>Score : {currentScore}</p>
           <p>Etape : {gameStep}/5</p>
+          <p>Ton meilleur score : {userBestScore}</p>
         </div>
         <GameModal />
       </>

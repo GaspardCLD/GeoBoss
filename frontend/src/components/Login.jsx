@@ -10,7 +10,7 @@ import StatesContext from "../../context/StatesContext";
 import ConfirmationModal from "./ConfirmationModal";
 
 function Login() {
-  const { setUserPseudo, setIsLoggedIn } = useContext(AuthContext);
+  const { setUserPseudo, setIsLoggedIn, setUserID } = useContext(AuthContext);
   const { openLoginModal, setOpenLoginModal } = useContext(StatesContext);
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState({ pseudo: "", password: "", password2: "" });
@@ -38,9 +38,11 @@ function Login() {
 
         if (jwtToken) {
           const decodedToken = jwtDecode(jwtToken);
-          const { pseudo } = decodedToken;
+          const { pseudo, sub } = decodedToken;
           Cookies.set("pseudo", pseudo);
+          Cookies.set("id", sub);
           setUserPseudo(pseudo);
+          setUserID(sub);
           setIsLoggedIn(true);
           navigateTo("/game");
         }
@@ -262,7 +264,7 @@ function Login() {
         ariaHideApp={false}
         style={{
           overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.15)",
             zIndex: 1000,
             backdropFilter: "blur(6px)",
           },

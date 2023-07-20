@@ -10,6 +10,7 @@ export default AuthContext;
 export function AuthProvider({ children }) {
   const [userPseudo, setUserPseudo] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userID, setUserID] = useState("");
 
   useEffect(() => {
     const storedPseudo = Cookies.get("pseudo");
@@ -24,6 +25,8 @@ export function AuthProvider({ children }) {
     setUserPseudo,
     isLoggedIn,
     setIsLoggedIn,
+    userID,
+    setUserID,
   }));
 
   return (

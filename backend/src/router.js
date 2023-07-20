@@ -21,7 +21,7 @@ router.post("/login", userControllers.login, verifyPassword);
 
 router.get("/users", userControllers.browse);
 
-router.post("/cities/:value", fetchApi, cityControllers.add);
+router.post("/cities/:minPopulation", fetchApi, cityControllers.add);
 router.post("/cities", fetchApiNoParams, cityControllers.add);
 router.get("/cities", cityControllers.browse);
 
@@ -32,5 +32,9 @@ router.put("/cities/resetusage", cityControllers.resetUsage);
 router.get("/cities/random", cityControllers.randomCities);
 
 router.post("/score/:userID/:score", scoreControllers.add);
+router.get("/scores", scoreControllers.getScores);
+router.get("/score/user/:userID", scoreControllers.getUserBestScore);
+router.get("/scores/all", scoreControllers.browseScores);
+router.get("/score/:score/rank", scoreControllers.getScoreRank);
 
 module.exports = router;

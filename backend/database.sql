@@ -43,3 +43,10 @@ VALUES
     'gaspi',
     '$argon2id$v=19$m=65536,t=5,p=1$GixxtmbFYS7IMpnqWrsjzA$VJHjeGPBL4V/lkEe+24mo53QkOedQxn3qpcvy9esP/8'
   );
+
+INSERT INTO
+  score (user_id, score)
+VALUES
+  (1, 851),
+  (1, 223),
+  (1, 792);
