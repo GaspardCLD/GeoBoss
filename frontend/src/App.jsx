@@ -17,9 +17,14 @@ function App() {
   const { setCitiesLoaded } = useContext(StatesContext);
 
   useEffect(() => {
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/cities`).then(() => {
-      setCitiesLoaded(true);
-    });
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/cities`)
+      .then(() => {
+        setCitiesLoaded(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   return (

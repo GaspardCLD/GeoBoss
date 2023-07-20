@@ -35,7 +35,10 @@ function Game() {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/score/user/${userId}`)
       .then((response) => {
-        setUserBestScore(response.data[0].score);
+        // eslint-disable-next-line no-unused-expressions
+        response.data.length !== 0
+          ? setUserBestScore(response.data[0].score)
+          : setUserBestScore(0);
       })
       .then(() => {
         setUserBestScoreLoaded(true);

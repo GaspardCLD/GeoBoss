@@ -5,7 +5,7 @@ import GameModal from "./GameModal";
 import GameContext from "../../context/GameContext";
 
 function Results() {
-  const { currentScore, setGameStep, setCurrentScore } =
+  const { currentScore, setGameStep, setCurrentScore, setUserResponse } =
     useContext(GameContext);
   const [userRank, setUserRank] = useState(0);
   const [numberOfScores, setNumberOfScores] = useState(0);
@@ -44,11 +44,18 @@ function Results() {
           to="/game"
           onClick={() => {
             setGameStep(0);
+            setUserResponse("");
           }}
         >
           Rejouer ?
         </Link>
-        <Link to="/" onClick={() => setCurrentScore(0)}>
+        <Link
+          to="/"
+          onClick={() => {
+            setCurrentScore(0);
+            setUserResponse("");
+          }}
+        >
           Retour à l'accueil
         </Link>
       </div>

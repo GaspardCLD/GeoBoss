@@ -9,7 +9,7 @@ function NavBar() {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState(false);
 
   return (
-    <div className="w-[100%] z-10  top-0 left-0">
+    <div className="w-[100%] z-10  top-0 left-0 ">
       <div className="navbar-header flex justify-between items-center bg-[#257492] h-[58px] lg:h-[64px] px-3 shadow-[0px_-3px_15px_#333]">
         <Link to="/">
           <img
