@@ -70,7 +70,7 @@ function GameModal() {
         <p className="text-2xl">
           Tu as été précis à{" "}
           <span className="font-bold text-[#257492] ">
-            {PercentageOfPrecision}
+            {PercentageOfPrecision > 0 ? PercentageOfPrecision : 0}
           </span>{" "}
           % !
         </p>

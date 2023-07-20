@@ -19,26 +19,24 @@ function Rules() {
         distance en kilomètres entre deux villes françaises.
       </p>
       <ol className="text-left mt-4">
-        <li>Le jeu vous présente plusieurs fois deux villes aléatoires.</li>
+        <li>Le jeu te présente plusieurs fois deux villes aléatoires.</li>
         <li>
-          Vous devez deviner la distance entre ces deux villes en kilomètres
-          dans la zone de saisie.
+          Tu dois deviner la distance entre ces deux villes en kilomètres dans
+          la zone de saisie.
         </li>
         <li>
-          Après avoir soumis votre estimation, le jeu vous indiquera la distance
-          réelle entre les deux villes et la précision de votre réponse.
+          Après avoir soumis ton estimation, le jeu t'indiquera la distance
+          réelle entre les deux villes et la précision de ta réponse.
         </li>
         <br />
         <li>
-          Plus votre estimation est proche de la distance réelle, plus votre
-          score sera élevé.
+          Plus ton estimation est proche de la distance réelle, plus ton score
+          sera élevé.
         </li>
 
-        <li>
-          Après 5 étapes, votre score final et votre classement sont révélés.
-        </li>
+        <li>Après 5 étapes, ton score final et ton classement sont révélés.</li>
       </ol>
-      <p className="mt-4">Prêt à commencer ? </p>
+      <p className="mt-4 font-bold">Prêt à commencer ? </p>
       <br />
 
       <button

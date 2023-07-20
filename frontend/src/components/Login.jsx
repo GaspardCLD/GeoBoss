@@ -36,11 +36,11 @@ function Login() {
     axios
       .post(`${import.meta.env.VITE_BACKEND_URL}/login`, user)
       .then((response) => {
+        setConfirmationModalOpen(true);
         const { token } = response.data;
         Cookies.set("jwt", token, { secure: true, sameSite: "strict" });
         const jwtToken = Cookies.get("jwt");
 
-        setConfirmationModalOpen(true);
         resetParameters();
         if (jwtToken) {
           const decodedToken = jwtDecode(jwtToken);
