@@ -1,53 +1,62 @@
-## Concept
+<p align="center">
+  <img src="./frontend/src/assets/geoguess_logo.ico" alt="GeoBoss Logo" width="100px" height="100px">
+</p>
 
-This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
-It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying as simple as possible to use.
+<h1 align="center">GeoBoss - Bird's Eye Distance Guessing Game</h1>
 
-## Setup & Use
 
-### Windows users
+GeoBoss is an engaging front-end and back-end web application that challenges players to guess the bird's eye distance between two French cities. The game is based on APIs datas from INSEE (Institut national de la statistique et des études économiques) and provides an entertaining way to test your geographical knowledge. The application is coded in React and styled using Tailwind CSS.
 
-Be sure to run these commands in a git terminal to avoid [issues with newline formats](https://en.wikipedia.org/wiki/Newline#Issues_with_different_newline_formats):
+## Features
 
+- Random City Selection: The game selects two random French cities from the INSEE database for each round.
+- Distance Estimation: Players must input their estimate of the bird's eye distance between the two selected cities.
+- Score Tracking: The game keeps track of the player's score based on the accuracy of their guesses.
+- Leaderboard: A leaderboard displays the top players and their scores.
+- User-Friendly Interface: The application features a clean, responsive and intuitive UI designed with Tailwind CSS.
+
+## Installation
+
+To run GeoBoss locally, follow these steps:
+
+###  Setup
+
+1. Clone the repository from GitHub:
+
+```bash
+git clone https://github.com/GaspardCLD/GeoBoss.git
 ```
-git config --global core.eol lf
-git config --global core.autocrlf false
+
+2. Install the dependencies from root
+
+```bash
+npm install
 ```
 
-### Project Initialization
+3. Create the ".env" files in both front and back folders, based on the .envsample files provided
 
-- In VSCode, install plugins **Prettier - Code formatter** and **ESLint** and configure them
-- Clone this repo, enter it
-- If you are using `yarn` or `pnpm`, adapt the `config/cli` in `package.json`
-- Run command `npm install`
-- _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
+4. Run the project from root folder
 
-### Available Commands
+```bash
+npm run dev
+```
 
-- `migrate` : Run the database migration script
-- `dev` : Starts both servers (frontend + backend) in one terminal
-- `dev-front` : Starts the React frontend server
-- `dev-back` : Starts the Express backend server
-- `lint` : Runs validation tools, and refuses unclean code (will be executed on every _commit_)
-- `fix` : Fixes linter errors (run it if `lint` growls on your code !)
+## Database
 
-## FAQ
+The application relies on a MySQL database to store city data from INSEE and user scores. Ensure you have the necessary database set up with the required tables before running the back-end.
 
-### Tools
+## Credits
 
-- _Concurrently_ : Allows for several commands to run concurrently in the same CLI
-- _Husky_ : Allows to execute specific commands that trigger on _git_ events
-- _Vite_ : Alternative to _Create-React-App_, packaging less tools for a more fluid experience
-- _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced
-- _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
-- _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
-- _Nodemon_ : Allows to restart the server everytime a .js file is udated
+This project is created and maintained by Gaspard Caillaud.
 
-### Deployment
+## Contributing
 
-For deployment, you have to go to `secrets` → app `actions` on the github repo to insert via `New repository secret` :
+Contributions to GeoBoss are welcome! If you find any issues or have suggestions for improvements, feel free to open a GitHub issue or submit a pull request.
 
-- CAPROVER_BACK_APPNAME : name app on caprover
-- CAPROVER_FRONT_APPNAME : name app on caprover
-- CAPROVER_PASSWORD : password caprover
-- CAPROVER_SERVER : link of domain
+## License
+
+GeoBoss is open-source software licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
+
+Enjoy playing GeoBoss and have fun guessing the bird's eye distances between French cities! 🐦✈️
+
+
