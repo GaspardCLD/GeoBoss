@@ -27,7 +27,7 @@ To run GeoBoss locally, follow these steps:
 git clone https://github.com/GaspardCLD/GeoBoss.git
 ```
 
-2. Install the dependencies from root
+2. Install the dependencies from root folder
 
 ```bash
 npm install
