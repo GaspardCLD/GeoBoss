@@ -15,6 +15,10 @@ GeoBoss is an engaging front-end and back-end web application that challenges pl
 - Leaderboard: A leaderboard displays the top players and their scores.
 - User-Friendly Interface: The application features a clean, responsive and intuitive UI designed with Tailwind CSS.
 
+## Database
+
+The application relies on a MySQL database to store city data from INSEE and user scores. Ensure you have the necessary database set up with the required tables before running the back-end.
+
 ## Installation
 
 To run GeoBoss locally, follow these steps:
@@ -33,7 +37,7 @@ git clone https://github.com/GaspardCLD/GeoBoss.git
 npm install
 ```
 
-3. Create the ".env" files in both front and back folders, based on the .envsample files provided
+3. Create the ".env" files in both front and back folders, based on the ".env.sample" files provided
 
 4. Fill the database with sql file
 
@@ -46,10 +50,6 @@ npm run migrate
 ```bash
 npm run dev
 ```
-
-## Database
-
-The application relies on a MySQL database to store city data from INSEE and user scores. Ensure you have the necessary database set up with the required tables before running the back-end.
 
 ## Credits
 
