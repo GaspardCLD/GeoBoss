@@ -127,10 +127,16 @@ function Game() {
     setExpectedDistance(currentDistance);
 
     if (difference <= currentDistance) {
-      setCurrentScore(
-        currentScore + Math.round((1 - difference / currentDistance) * 200)
-      );
+      if (
+        currentScore + Math.round((1 - difference / currentDistance) * 200) >
+        0
+      ) {
+        setCurrentScore(
+          currentScore + Math.round((1 - difference / currentDistance) * 200)
+        );
+      }
     }
+
     setGameModalOpen(true);
 
     if (gameStep <= 4) {

@@ -52,7 +52,7 @@ function Login() {
           setUserID(sub);
           setIsLoggedIn(true);
           if (citiesLoaded) {
-            navigateTo("/game");
+            navigateTo("/");
           } else {
             navigateTo("/rules");
           }
