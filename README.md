@@ -61,8 +61,6 @@ Contributions to GeoBoss are welcome! If you find any issues or have suggestions
 
 ## License
 
-GeoBoss is open-source software licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
-
 Enjoy playing GeoBoss and have fun guessing the bird's eye distances between French cities! 🐦✈️
 
 
