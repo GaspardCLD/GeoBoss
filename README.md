@@ -35,7 +35,13 @@ npm install
 
 3. Create the ".env" files in both front and back folders, based on the .envsample files provided
 
-4. Run the project from root folder
+4. Fill the database with sql file
+
+```bash
+npm run migrate
+```   
+
+6. Run the project from root folder
 
 ```bash
 npm run dev
