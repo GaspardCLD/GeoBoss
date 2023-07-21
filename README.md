@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./frontend/src/assets/geoguess_logo.ico" alt="GeoBoss Logo" width="100px" height="100px">
+  <img src="./frontend/src/assets/geoguess_logo.ico" alt="GeoBoss Logo" width="80px" height="80px">
 </p>
 
 <h1 align="center">GeoBoss - Bird's Eye Distance Guessing Game</h1>
